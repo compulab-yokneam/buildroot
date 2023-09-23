@@ -2,12 +2,7 @@
 
 BUILDROOT_URL="https://git.buildroot.net/buildroot"
 
-COMPULAB_BR2_URL="https://raw.githubusercontent.com/compulab-yokneam/buildroot/master/buildroot/configs"
-
-COMPULAB_BR2_CONFIGS=""
-COMPULAB_BR2_CONFIGS+=" iot-gate-imx8plus_defconfig "
-COMPULAB_BR2_CONFIGS+=" ucm-imx8m-plus_defconfig "
-COMPULAB_BR2_CONFIGS+=" som-imx8m-plus_defconfig "
+COMPULAB_BR2_URL="https://github.com/compulab-yokneam/buildroot.git"
 
 BR2_DIR=${BR2_DIR:-$(pwd)/compulab-buildroot-$(date +%Y%m%d%H%M%S)}
 
@@ -20,9 +15,10 @@ br2_clone_buildroot() {
 }
 
 br2_add_compulab_support() {
-	for _c in ${COMPULAB_BR2_CONFIGS};do
-		[[ -f ${BR2_DIR}/configs/${_c} ]] || wget --directory-prefix ${BR2_DIR}/configs ${COMPULAB_BR2_URL}/${_c}	
-	done
+	local compulab_br2_dir=$(mktemp --directory)
+	git clone ${COMPULAB_BR2_URL} ${compulab_br2_dir}
+	tar -C ${compulab_br2_dir}/buildroot -cf - . | tar -C ${BR2_DIR} -xf -
+	rm -rf ${compulab_br2_dir}
 }
 
 br2_make_build_folder
