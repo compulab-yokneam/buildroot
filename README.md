@@ -22,12 +22,7 @@ mkdir compulab-br2 && cd compulab-br2
 
 * Download the code:
 ```
-bash <(curl -L https://raw.githubusercontent.com/compulab-yokneam/buildroot/lf-6.1.36-2.1.0/tools/run.me)
-```
-
-* Goto the compulab-buildroot folder:
-```
-cd compulab-buildroot-*
+source <(curl -L https://raw.githubusercontent.com/compulab-yokneam/buildroot/lf-6.1.36-2.1.0/tools/run.me)
 ```
 
 * Issue defconfig:
