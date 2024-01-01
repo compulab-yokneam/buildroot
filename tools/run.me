@@ -9,6 +9,7 @@ BR2_DIR=${BR2_DIR:-$(pwd)/compulab-buildroot-$(date +%Y%m%d%H%M%S)}
 
 br2_make_build_folder() {
 	mkdir -p ${BR2_DIR}
+	pushd ${BR2_DIR}
 }
 
 br2_clone_buildroot() {
@@ -22,6 +23,21 @@ br2_add_compulab_support() {
 	rm -rf ${compulab_br2_dir}
 }
 
+br2_greeter() {
+cat << eof
+
+	Welcome to CompuLab Buildroot buid environment in ${BR2_DIR}
+
+	Build sample image for ${MACHINE}:
+		cd ${BR2_DIR}
+		make ${MACHINE}_defconfig
+		make -j `nproc`
+
+
+eof
+}
+
 br2_make_build_folder
 br2_clone_buildroot
 br2_add_compulab_support
+br2_greeter
